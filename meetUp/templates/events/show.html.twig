@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block title event.title %}
+
+{% block body %}
+        <div class="jumbotron">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-8">
+
+                    </div>
+                    <div class="col-md-4">
+                        <h1>{{ event.title }}</h1>
+                        <a href="#" class="btn btn-primary">S'inscrire</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container mt-4">
+            <div class="row">
+                <div class="col-md-8">
+                    <h2 class="mb-2">Description :</h2>
+                    <p>{{ event.description }}</p>
+                </div>
+                <div class="col-md-4">
+                    <h2 class="mb-2">Informations :</h2>
+                        <table class="table table-striped">
+                            <tr>
+                                <td>Début :</td>
+                                <td>{{ event.startAt |date("d/m/Y") }}</td>
+                            </tr>
+                            <tr>
+                                <td>Fin :</td>
+                                <td>{{ event.finishAt |date("d/m/Y") }}</td>
+                            </tr>
+                            <tr>
+                                <td>Addresse :</td>
+                                <td>{{ event.address }}</td>
+                            </tr>
+                            <tr>
+                                <td>Ville :</td>
+                                <td>{{ event.city }}</td>
+                            </tr>
+                            <tr>
+                                <td>Code Postale :</td>
+                                <td>{{ event.postalCode }}</td>
+                            </tr>
+                            <tr>
+                                <td>Nombre de places :</td>
+                                <td>{{ event.capacity }}</td>
+                            </tr>
+                        </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

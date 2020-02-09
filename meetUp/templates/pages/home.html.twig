@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="jumbotron text-center">
+        <div class="container">
+        </div>
+    </div>
+    <div class="container">
+        <h2>Les derniers évenements</h2>
+        <div class="row flex">
+            {% for event in properties %}
+            <div class="col-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <a href="{{ path('events.show', {id: event.id, slug: event.slug}) }}">{{ event.title }}</a>
+                        </h5>
+                        <p class="card-text">{{ event.city }} ({{ event.postalCode }})</p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
