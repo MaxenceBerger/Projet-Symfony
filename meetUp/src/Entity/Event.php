@@ -4,10 +4,14 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Cocur\Slugify\Slugify;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\EventRepository")
+ * @UniqueEntity("title")
  */
+
 class Event
 {
     /**
@@ -24,6 +28,7 @@ class Event
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @Assert\Length(min="5", max="255")
      */
     private $description;
 
@@ -49,11 +54,13 @@ class Event
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Range(min=0, max=10000)
      */
     private $capacity;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Regex("/^[0-9]{5}$/")
      */
     private $postal_code;
 

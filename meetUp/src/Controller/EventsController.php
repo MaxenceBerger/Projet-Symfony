@@ -25,8 +25,7 @@ class EventsController extends AbstractController
      */
     public function index(): Response
     {
-        $property = $this->reposiptory->find(1);
-        dump($property);
+        $properties = $this->reposiptory->find(1);
         return $this->render("events/index.html.twig", [
             "current_menu" => "events"
         ]);
