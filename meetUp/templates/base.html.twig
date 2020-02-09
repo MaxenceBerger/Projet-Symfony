@@ -23,6 +23,13 @@
                             </a>
                         </li>
                     </ul>
+                    {% if app.user %}
+                        <ul class="navbar-nav">
+                            <li class="navbar-item">
+                                <a href="{{ path('logout') }}" class="nav-link">Se déconnecter</a>
+                            </li>
+                        </ul>
+                    {% endif %}
                 </div>
             </nav>
         </header>

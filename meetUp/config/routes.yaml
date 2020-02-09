@@ -2,6 +2,8 @@ controllers:
   resource: ../src/Controller/
   type:     annotation
 
+logout:
+  path: /logout
 #index:
 #    path: /
 #    controller: App\Controller\DefaultController::index

@@ -8,8 +8,10 @@
       <excludeFolder url="file://$MODULE_DIR$/meetUp/vendor/doctrine/cache" />
       <excludeFolder url="file://$MODULE_DIR$/meetUp/vendor/doctrine/collections" />
       <excludeFolder url="file://$MODULE_DIR$/meetUp/vendor/doctrine/common" />
+      <excludeFolder url="file://$MODULE_DIR$/meetUp/vendor/doctrine/data-fixtures" />
       <excludeFolder url="file://$MODULE_DIR$/meetUp/vendor/doctrine/dbal" />
       <excludeFolder url="file://$MODULE_DIR$/meetUp/vendor/doctrine/doctrine-bundle" />
+      <excludeFolder url="file://$MODULE_DIR$/meetUp/vendor/doctrine/doctrine-fixtures-bundle" />
       <excludeFolder url="file://$MODULE_DIR$/meetUp/vendor/doctrine/doctrine-migrations-bundle" />
       <excludeFolder url="file://$MODULE_DIR$/meetUp/vendor/doctrine/event-manager" />
       <excludeFolder url="file://$MODULE_DIR$/meetUp/vendor/doctrine/inflector" />

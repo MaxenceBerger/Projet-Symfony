@@ -107,6 +107,8 @@
       <path value="$PROJECT_DIR$/meetUp/vendor/doctrine/orm" />
       <path value="$PROJECT_DIR$/meetUp/vendor/composer" />
       <path value="$PROJECT_DIR$/meetUp/vendor/cocur/slugify" />
+      <path value="$PROJECT_DIR$/meetUp/vendor/doctrine/data-fixtures" />
+      <path value="$PROJECT_DIR$/meetUp/vendor/doctrine/doctrine-fixtures-bundle" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="7.1" />
