@@ -28,7 +28,7 @@ class Event
 
     /**
      * @ORM\Column(type="text", nullable=true)
-     * @Assert\Length(min="5", max="255")
+     * @Assert\Length(min="5", max="10000")
      */
     private $description;
 
