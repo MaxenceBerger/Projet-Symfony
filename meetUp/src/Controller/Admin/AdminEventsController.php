@@ -36,7 +36,11 @@ class AdminEventsController extends AbstractController
     public function index()
     {
         $events = $this->repository->findAll();
-        return $this->render("admin/events/index.html.twig", compact('events'));
+
+        return $this->render("admin/events/index.html.twig", [
+            'events' => $events,
+            'current_menu' => 'admin'
+        ]);
     }
 
 
