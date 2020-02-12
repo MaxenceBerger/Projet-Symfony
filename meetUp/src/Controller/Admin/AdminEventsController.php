@@ -39,7 +39,7 @@ class AdminEventsController extends AbstractController
 
         return $this->render("admin/events/index.html.twig", [
             'events' => $events,
-            'current_menu' => 'admin'
+            'current_menu' => 'admin.event'
         ]);
     }
 
