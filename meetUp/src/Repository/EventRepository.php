@@ -29,6 +29,13 @@ class EventRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function findByUser():array
+    {
+        return $this->createQueryBuilder('SELECT * FROM App\Entity\User user WHERE user_id = 3');
+
+    }
+
     // /**
     //  * @return Event[] Returns an array of Event objects
     //  */

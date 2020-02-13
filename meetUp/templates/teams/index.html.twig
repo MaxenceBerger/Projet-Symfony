@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title 'Tous nos groupes' %}
+
+{% block body %}
+    <div class="container">
+        <h1>Voir tous nos Groupes</h1>
+
+        {% for team in properties %}
+            <div class="col-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <a href="{{ path('teams.show', {id: team.id, slug: team.slug}) }}">{{ team.name }}</a>
+                        </h5>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

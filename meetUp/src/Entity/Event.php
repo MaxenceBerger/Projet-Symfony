@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Cocur\Slugify\Slugify;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -11,7 +13,6 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * @ORM\Entity(repositoryClass="App\Repository\EventRepository")
  * @UniqueEntity("title")
  */
-
 class Event
 {
     /**
@@ -63,6 +64,16 @@ class Event
      * @Assert\Regex("/^[0-9]{5}$/")
      */
     private $postal_code;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\User", inversedBy="events")
+     */
+    private $users;
+
+    public function __construct()
+    {
+        $this->users = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -166,6 +177,33 @@ class Event
     public function setPostalCode(string $postal_code): self
     {
         $this->postal_code = $postal_code;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|User[]
+     */
+    public function getUsers(): Collection
+    {
+        return $this->users;
+    }
+
+    public function addUser(User $user)
+    {
+        if ($this->users->contains($user)) {
+            return;
+        }
+
+        $this->users->add($user);
+        $user->addEvent($this);
+    }
+
+    public function removeUser(User $user): self
+    {
+        if ($this->users->contains($user)) {
+            $this->users->removeElement($user);
+        }
 
         return $this;
     }

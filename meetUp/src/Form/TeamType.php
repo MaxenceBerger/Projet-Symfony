@@ -2,24 +2,19 @@
 
 namespace App\Form;
 
-use App\Entity\Event;
+use App\Entity\Team;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class EventType extends AbstractType
+class TeamType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('title')
+            ->add('name')
             ->add('description')
-            ->add('start_at')
-            ->add('finish_at')
-            ->add('address')
-            ->add('city')
-            ->add('capacity')
-            ->add('postal_code')
+            ->add('thematic')
             ->add('user')
         ;
     }
@@ -27,8 +22,7 @@ class EventType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Event::class,
-            'translation_domain' => 'forms'
+            'data_class' => Team::class,
         ]);
     }
 }

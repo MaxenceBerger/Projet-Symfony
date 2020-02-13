@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div class="jumbotron">
+        <div class="container mt-3">
+            <h2>Créer un événement</h2>
+            {{ form_start(form) }}
+            <div class="row">
+                <div class="col-md-4">
+                    {{ form_row(form.name) }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    {{ form_row(form.description) }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-2">
+                    {{ form_row(form.thematic) }}
+                </div>
+            </div>
+        </div>
+        {{ form_widget(form) }}
+        <button class="btn btn-primary">Sauvgarder</button>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

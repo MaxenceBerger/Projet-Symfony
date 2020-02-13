@@ -9,6 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class AdminEventsController extends AbstractController
 {
@@ -23,14 +24,14 @@ class AdminEventsController extends AbstractController
      */
     private $em;
 
-    public function __construct(EventRepository $repository, EntityManagerInterface $em)
+    public function __construct(EventRepository $repository, EntityManagerInterface $em )
     {
         $this->repository = $repository;
         $this->em = $em;
     }
 
     /**
-     * @Route("/admin", name="admin.events.index")
+     * @Route("/admin/event", name="admin.events.index")
      * @return Response
      */
     public function index()
@@ -45,7 +46,7 @@ class AdminEventsController extends AbstractController
 
 
     /**
-     * @Route("/admin/create", name="admin.events.new")
+     * @Route("/admin/event/create", name="admin.events.new")
      * @param Request $request
      * @return Response
      */
@@ -54,6 +55,9 @@ class AdminEventsController extends AbstractController
         $event = new Event();
         $form = $this->createForm(EventType::class, $event);
         $form->handleRequest($request);
+
+        $user = $this->getUser();
+        $user->addUser($event);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->em->persist($event);
@@ -71,7 +75,7 @@ class AdminEventsController extends AbstractController
     }
 
     /**
-     * @Route("/admin/{id}", name="admin.events.edit", methods="GET|POST")
+     * @Route("/admin/event/{id}", name="admin.events.edit", methods="GET|POST")
      * @param Event $event
      * @param Request $request
      * @return Response
@@ -95,7 +99,7 @@ class AdminEventsController extends AbstractController
     }
 
     /**
-     * @Route("/admin/{id}", name="admin.events.delete", methods="DELETE")
+     * @Route("/admin/event/{id}", name="admin.events.delete", methods="DELETE")
      * @param Event $event
      * @param Request $request
      * @return Response

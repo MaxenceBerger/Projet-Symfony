@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -49,6 +51,27 @@ class User implements UserInterface
      * @ORM\Column(type="string")
      */
     private $password;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Team", mappedBy="users")
+     */
+    private $teams;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $is_admin_team;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Event", mappedBy="users")
+     */
+    private $events;
+
+    public function __construct()
+    {
+        $this->teams = new ArrayCollection();
+        $this->events = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -164,5 +187,72 @@ class User implements UserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    /**
+     * @return Collection|Team[]
+     */
+    public function getTeams(): Collection
+    {
+        return $this->teams;
+    }
+
+    public function addTeam(Team $team)
+    {
+        if ($this->teams->contains($team)) {
+            return;
+        }
+
+        $this->teams->add($team);
+        $team->addUser($this);
+    }
+
+    public function removeTeam(Team $team): self
+    {
+        if ($this->teams->contains($team)) {
+            $this->teams->removeElement($team);
+        }
+
+        return $this;
+    }
+
+    public function getIsAdminTeam(): ?bool
+    {
+        return $this->is_admin_team;
+    }
+
+    public function setIsAdminTeam(bool $is_admin_team): self
+    {
+        $this->is_admin_team = $is_admin_team;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Event[]
+     */
+    public function getEvents(): Collection
+    {
+        return $this->events;
+    }
+
+    public function addEvent(Event $event)
+    {
+        if ($this->events->contains($event)) {
+            return;
+        }
+
+        $this->events->add($event);
+        $event->addUser($this);
+    }
+
+    public function removeEvent(Event $event): self
+    {
+        if ($this->events->contains($event)) {
+            $this->events->removeElement($event);
+            $event->removeUser($this);
+        }
+
+        return $this;
     }
 }

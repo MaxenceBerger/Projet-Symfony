@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title 'Gestion des évenememnts' %}
+
+{% block body %}
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success">
+            {{ message }}
+        </div>
+    {% endfor %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-9">
+            <h1>Gestion des événements</h1>
+        </div>
+        <div class="col-md-3">
+            <a href="{{ path('admin.teams.new') }}" class="btn btn-primary">Créer un groupe</a>
+        </div>
+    </div>
+    <table class="table table-striped mt-4">
+        <thead>
+        <tr>
+            <th>Titre</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for team in teams %}
+            <tr>
+                <td>{{ team.name }}</td>
+                <td>
+                    <a href="{{ path('admin.teams.edit', {id: team.id}) }}" class="btn btn-secondary">Editer</a>
+                    <form method="post" action="{{ path('admin.teams.delete', {id: team.id}) }}"
+                          style="display: inline-block" onsubmit="return confirm('Confirmez-vous la suppression ?')">
+                        <input type="hidden" name="_method" value="DELETE">
+                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ team.id)}}">
+                        <button class="btn btn-danger">Supprimer</button>
+                    </form>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
