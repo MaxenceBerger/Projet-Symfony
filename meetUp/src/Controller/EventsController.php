@@ -2,6 +2,8 @@
 namespace App\Controller;
 
 use App\Entity\Event;
+use App\Entity\Team;
+use App\Entity\User;
 use App\Repository\EventRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -12,11 +14,11 @@ class EventsController extends AbstractController
     /**
      * @var EventRepository
      */
-    private $reposiptory;
+    private $repository;
 
-    public function __construct(EventRepository $reposiptory)
+    public function __construct(EventRepository $repository)
     {
-        $this->reposiptory = $reposiptory;
+        $this->repository = $repository;
     }
 
     /**
@@ -25,7 +27,7 @@ class EventsController extends AbstractController
      */
     public function index(): Response
     {
-        $properties = $this->reposiptory->find(1);
+        $properties = $this->repository->find(1);
         return $this->render("events/index.html.twig", [
             "current_menu" => "events"
         ]);
@@ -43,6 +45,39 @@ class EventsController extends AbstractController
             return $this->redirectToRoute('events.show', [
                 'id' => $event->getId(),
                 'slug' => $event->getSlug()
+            ], 301);
+        }
+        return $this->render('events/show.html.twig', [
+            'event' => $event,
+            'current_menu' => 'event'
+        ]);
+    }
+    /**
+     * @Route("/evenements/{slug}-{id}/join", name="events.join", requirements={"slug": "[a-z0-9\-]*"})
+     * @param Event $event
+     * @param string $slug
+     * @return Response
+     */
+    public function join(Event $event, string $slug): Response
+    {
+        $event = $this->getDoctrine()
+            ->getRepository(Event::class)
+            ->find($event);
+
+        $user = $this->getDoctrine()
+            ->getRepository(User::class)
+            ->find($this->getUser());
+
+        if ($event->getSlug() === $slug) {
+            $event->addUser($user);
+            $user->addEvent($event);
+
+            $this->getDoctrine()->getManager()->flush();
+
+
+        } else {
+            return $this->redirectToRoute('events.show', [
+                'id' => $event->getId(),
             ], 301);
         }
         return $this->render('events/show.html.twig', [

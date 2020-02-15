@@ -39,9 +39,15 @@ class Team
      */
     private $users;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\User", mappedBy="teams_member")
+     */
+    private $users_member;
+
     public function __construct()
     {
         $this->users = new ArrayCollection();
+        $this->users_member = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -112,5 +118,33 @@ class Team
     public function getSlug()
     {
         return (new Slugify())->slugify($this->name);
+    }
+
+    /**
+     * @return Collection|User[]
+     */
+    public function getUsersMember(): Collection
+    {
+        return $this->users_member;
+    }
+
+    public function addUsersMember(User $usersMember): self
+    {
+        if (!$this->users_member->contains($usersMember)) {
+            $this->users_member[] = $usersMember;
+            $usersMember->addTeamsMember($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUsersMember(User $usersMember): self
+    {
+        if ($this->users_member->contains($usersMember)) {
+            $this->users_member->removeElement($usersMember);
+            $usersMember->removeTeamsMember($this);
+        }
+
+        return $this;
     }
 }

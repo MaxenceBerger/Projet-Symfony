@@ -14,11 +14,24 @@ class HomeController extends AbstractController
      * @return Response
      */
 
-
-    public function index(EventRepository $repository): Response
+    public function home(EventRepository $repository): Response
     {
         $properties = $repository->findLatest();
         return $this->render('pages/home.html.twig', [
+            'properties' => $properties
+        ]);
+    }
+
+    /**
+     * @Route("/evenements", name="events.index")
+     * @param EventRepository $repository
+     * @return Response
+     */
+
+    public function index(EventRepository $repository): Response
+    {
+        $properties = $repository->findAll();
+        return $this->render('events/index.html.twig', [
             'properties' => $properties
         ]);
     }

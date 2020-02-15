@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Event;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 
@@ -30,9 +31,8 @@ class EventRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function findByUser():array
+    public function findUser()
     {
-        return $this->createQueryBuilder('SELECT * FROM App\Entity\User user WHERE user_id = 3');
 
     }
 

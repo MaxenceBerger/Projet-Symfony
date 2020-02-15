@@ -11,7 +11,7 @@
                     </div>
                     <div class="col-md-4">
                         <h1>{{ event.title }}</h1>
-                        <a href="#" class="btn btn-primary">S'inscrire</a>
+                        <a href="{{ path('events.join', {id: event.id, slug: event.slug}) }}" class="btn btn-primary">S'inscrire</a>
                     </div>
                 </div>
             </div>
@@ -48,6 +48,10 @@
                             <tr>
                                 <td>Nombre de places :</td>
                                 <td>{{ event.capacity }}</td>
+                            </tr>
+                            <tr>
+                                <td>Users :</td>
+                                <td>{{ event.city }}</td>
                             </tr>
                         </table>
                 </div>

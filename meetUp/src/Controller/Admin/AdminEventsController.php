@@ -2,6 +2,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Event;
+use App\Entity\User;
 use App\Form\EventType;
 use App\Repository\EventRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -9,7 +10,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class AdminEventsController extends AbstractController
 {
@@ -56,9 +56,6 @@ class AdminEventsController extends AbstractController
         $form = $this->createForm(EventType::class, $event);
         $form->handleRequest($request);
 
-        $user = $this->getUser();
-        $user->addUser($event);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $this->em->persist($event);
             $this->em->flush();
@@ -86,6 +83,7 @@ class AdminEventsController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $this->em->persist($event);
             $this->em->flush();
             $this->addFlash('success', 'Modifié avec succès');
 

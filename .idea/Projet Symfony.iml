@@ -23,7 +23,10 @@
       <excludeFolder url="file://$MODULE_DIR$/meetUp/vendor/doctrine/reflection" />
       <excludeFolder url="file://$MODULE_DIR$/meetUp/vendor/easycorp/easy-log-handler" />
       <excludeFolder url="file://$MODULE_DIR$/meetUp/vendor/egulias/email-validator" />
+      <excludeFolder url="file://$MODULE_DIR$/meetUp/vendor/imagine/imagine" />
       <excludeFolder url="file://$MODULE_DIR$/meetUp/vendor/jdorn/sql-formatter" />
+      <excludeFolder url="file://$MODULE_DIR$/meetUp/vendor/jms/metadata" />
+      <excludeFolder url="file://$MODULE_DIR$/meetUp/vendor/liip/imagine-bundle" />
       <excludeFolder url="file://$MODULE_DIR$/meetUp/vendor/monolog/monolog" />
       <excludeFolder url="file://$MODULE_DIR$/meetUp/vendor/nikic/php-parser" />
       <excludeFolder url="file://$MODULE_DIR$/meetUp/vendor/ocramius/package-versions" />
@@ -73,8 +76,10 @@
       <excludeFolder url="file://$MODULE_DIR$/meetUp/vendor/symfony/options-resolver" />
       <excludeFolder url="file://$MODULE_DIR$/meetUp/vendor/symfony/orm-pack" />
       <excludeFolder url="file://$MODULE_DIR$/meetUp/vendor/symfony/phpunit-bridge" />
+      <excludeFolder url="file://$MODULE_DIR$/meetUp/vendor/symfony/polyfill-intl-grapheme" />
       <excludeFolder url="file://$MODULE_DIR$/meetUp/vendor/symfony/polyfill-intl-icu" />
       <excludeFolder url="file://$MODULE_DIR$/meetUp/vendor/symfony/polyfill-intl-idn" />
+      <excludeFolder url="file://$MODULE_DIR$/meetUp/vendor/symfony/polyfill-intl-normalizer" />
       <excludeFolder url="file://$MODULE_DIR$/meetUp/vendor/symfony/polyfill-mbstring" />
       <excludeFolder url="file://$MODULE_DIR$/meetUp/vendor/symfony/polyfill-php72" />
       <excludeFolder url="file://$MODULE_DIR$/meetUp/vendor/symfony/polyfill-php73" />
@@ -92,6 +97,8 @@
       <excludeFolder url="file://$MODULE_DIR$/meetUp/vendor/symfony/serializer-pack" />
       <excludeFolder url="file://$MODULE_DIR$/meetUp/vendor/symfony/service-contracts" />
       <excludeFolder url="file://$MODULE_DIR$/meetUp/vendor/symfony/stopwatch" />
+      <excludeFolder url="file://$MODULE_DIR$/meetUp/vendor/symfony/string" />
+      <excludeFolder url="file://$MODULE_DIR$/meetUp/vendor/symfony/templating" />
       <excludeFolder url="file://$MODULE_DIR$/meetUp/vendor/symfony/test-pack" />
       <excludeFolder url="file://$MODULE_DIR$/meetUp/vendor/symfony/translation" />
       <excludeFolder url="file://$MODULE_DIR$/meetUp/vendor/symfony/translation-contracts" />
@@ -106,6 +113,7 @@
       <excludeFolder url="file://$MODULE_DIR$/meetUp/vendor/symfony/yaml" />
       <excludeFolder url="file://$MODULE_DIR$/meetUp/vendor/twig/extra-bundle" />
       <excludeFolder url="file://$MODULE_DIR$/meetUp/vendor/twig/twig" />
+      <excludeFolder url="file://$MODULE_DIR$/meetUp/vendor/vich/uploader-bundle" />
       <excludeFolder url="file://$MODULE_DIR$/meetUp/vendor/webmozart/assert" />
       <excludeFolder url="file://$MODULE_DIR$/meetUp/vendor/zendframework/zend-code" />
       <excludeFolder url="file://$MODULE_DIR$/meetUp/vendor/zendframework/zend-eventmanager" />

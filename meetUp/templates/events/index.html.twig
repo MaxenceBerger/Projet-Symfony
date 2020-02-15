@@ -3,7 +3,28 @@
 {% block title 'Tous nos événements' %}
 
 {% block body %}
+    <div class="jumbotron text-center">
+        <div class="container">
+        </div>
+    </div>
     <div class="container">
-        <h1>Voir tous nos événements</h1>
+        <h2>Voir tout les événements</h2>
+        <div class="row flex">
+            {% for event in properties %}
+                <div class="col-3">
+                    <div class="card mt-4">
+                        {% if event.filename %}
+                            <img src="/images/events/{{ event.filename }}" alt="card-img-top" style="width: 100%; height: 125px">
+                        {% endif %}
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                <a href="{{ path('events.show', {id: event.id, slug: event.slug}) }}">{{ event.title }}</a>
+                            </h5>
+                            <p class="card-text">{{ event.city }} ({{ event.postalCode }})</p>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
     </div>
 {% endblock %}

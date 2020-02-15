@@ -11,7 +11,7 @@
                     </div>
                     <div class="col-md-4">
                         <h1>{{ team.name }}</h1>
-                        <a href="#" class="btn btn-primary">Rejoindre</a>
+                        <a href="{{ path('teams.join', {id: team.id, slug: team.slug}) }}" class="btn btn-primary">Rejoindre</a>
                     </div>
                 </div>
             </div>
@@ -28,7 +28,9 @@
                             <tr>
                                 <td>
                                     <p><strong>Thématique : </strong>{{ team.thematic }}</p>
-                                    <p><strong>Groupe créer par : </strong>{{ team.user.firstname }}</p>
+                                </td>
+                                <td>
+                                    <p><strong>Inscrit : </strong></p>
                                 </td>
                             </tr>
                         </table>

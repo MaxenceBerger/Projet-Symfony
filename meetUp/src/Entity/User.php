@@ -60,17 +60,23 @@ class User implements UserInterface
     /**
      * @ORM\Column(type="boolean")
      */
-    private $is_admin_team;
+    private $is_admin_team = 0;
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Event", mappedBy="users")
      */
     private $events;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Team", inversedBy="users_member")
+     */
+    private $teams_member;
+
     public function __construct()
     {
         $this->teams = new ArrayCollection();
         $this->events = new ArrayCollection();
+        $this->teams_member = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -251,6 +257,32 @@ class User implements UserInterface
         if ($this->events->contains($event)) {
             $this->events->removeElement($event);
             $event->removeUser($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Team[]
+     */
+    public function getTeamsMember(): Collection
+    {
+        return $this->teams_member;
+    }
+
+    public function addTeamsMember(Team $teamsMember): self
+    {
+        if (!$this->teams_member->contains($teamsMember)) {
+            $this->teams_member[] = $teamsMember;
+        }
+
+        return $this;
+    }
+
+    public function removeTeamsMember(Team $teamsMember): self
+    {
+        if ($this->teams_member->contains($teamsMember)) {
+            $this->teams_member->removeElement($teamsMember);
         }
 
         return $this;

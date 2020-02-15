@@ -3,7 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\Team;
+use App\Entity\User;
 use App\Repository\TeamRepository;
+use Doctrine\Common\EventManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -59,5 +61,40 @@ class TeamController extends AbstractController
             'team' => $team,
             'current_menu' => 'team'
         ]);
+    }
+
+    /**
+     * @Route("/teams/{slug}-{id}/join", name="teams.join", requirements={"slug": "[a-z0-9\-]*"})
+     * @param Team $team
+     * @param string $slug
+     * @return Response
+     */
+    public function join(Team $team, string $slug): Response
+    {
+        $team = $this->getDoctrine()
+            ->getRepository(Team::class)
+            ->find($team);
+
+        $user = $this->getDoctrine()
+            ->getRepository(User::class)
+            ->find($this->getUser());
+
+        if ($team->getSlug() === $slug) {
+            $team->addUsersMember($user);
+            $user->addTeamsMember($team);
+
+            $this->getDoctrine()->getManager()->flush();
+
+        } else {
+            return $this->redirectToRoute('teams.show', [
+                'id' => $team->getId(),
+            ], 301);
+        }
+        return $this->render('teams/show.html.twig', [
+            'team' => $team,
+            'current_menu' => 'team'
+        ]);
+        $this->addFlash('success', 'Rejoin avec succès');
+
     }
 }
