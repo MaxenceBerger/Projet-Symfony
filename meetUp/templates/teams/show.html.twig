@@ -7,7 +7,9 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-8">
-
+                        {% if team.filename %}
+                            <img src="/images/teams/{{ team.filename }}" alt="card-img-top" style="width: 100%; height: auto">
+                        {% endif %}
                     </div>
                     <div class="col-md-4">
                         <h1>{{ team.name }}</h1>

@@ -7,11 +7,13 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-8">
-
+                        {% if event.filename %}
+                            <img src="/images/events/{{ event.filename }}" alt="card-img-top" style="width: 100%; height: auto">
+                        {% endif %}
                     </div>
                     <div class="col-md-4">
                         <h1>{{ event.title }}</h1>
-                        <a href="{{ path('events.join', {id: event.id, slug: event.slug}) }}" class="btn btn-primary">S'inscrire</a>
+                        <a href="{{ path('events.join', {id: event.id, slug: event.slug}) }}" class="btn btn-primary mt-5">S'inscrire</a>
                     </div>
                 </div>
             </div>
