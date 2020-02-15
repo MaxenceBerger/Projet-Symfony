@@ -3,9 +3,8 @@
 namespace App\Form;
 
 use App\Entity\Team;
-use App\Entity\User;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -17,6 +16,9 @@ class TeamType extends AbstractType
             ->add('name')
             ->add('description')
             ->add('thematic')
+            ->add('imageFile', FileType::class, [
+                'required' => false
+            ])
         ;
     }
 

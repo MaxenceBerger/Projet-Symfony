@@ -83,6 +83,7 @@ class AdminTeamsController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $this->em->persist($team);
             $this->em->flush();
             $this->addFlash('success', 'Modifié avec succès');
 

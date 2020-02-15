@@ -13,11 +13,15 @@
 
         {% for team in properties %}
             <div class="col-3">
-                <div class="card">
+                <div class="card mt-4">
+                    {% if team.filename %}
+                        <img src="/images/teams/{{ team.filename }}" alt="card-img-top" style="width: 100%; height: 125px">
+                    {% endif %}
                     <div class="card-body">
                         <h5 class="card-title">
                             <a href="{{ path('teams.show', {id: team.id, slug: team.slug}) }}">{{ team.name }}</a>
                         </h5>
+                        <p class="card-text">{{ team.description }}</p>
                     </div>
                 </div>
             </div>
