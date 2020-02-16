@@ -17,7 +17,7 @@ class TeamType extends AbstractType
             ->add('description')
             ->add('thematic')
             ->add('imageFile', FileType::class, [
-                'required' => false
+                'required' => true
             ])
         ;
     }

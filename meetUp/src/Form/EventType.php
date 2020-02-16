@@ -23,7 +23,7 @@ class EventType extends AbstractType
             ->add('capacity')
             ->add('postal_code')
             ->add('imageFile', FileType::class, [
-                'required' => false
+                'required' => true
             ])
         ;
     }

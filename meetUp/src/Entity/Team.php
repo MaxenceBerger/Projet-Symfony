@@ -203,21 +203,21 @@ class Team
      * @return Team
      * @throws Exception
      */
-    public function setImageFile(?File $imageFile): Team
+    public function setImageFile(?File $imageFile): User
     {
         $this->imageFile = $imageFile;
         if ($this->imageFile instanceof UploadedFile) {
-            $this->updated_at = new DateTime('now');
+            $this->updated_at = new \DateTime('now');
         }
         return $this;
     }
 
-    public function getUpdatedAt(): ?DateTimeInterface
+    public function getUpdatedAt(): ?\DateTimeInterface
     {
         return $this->updated_at;
     }
 
-    public function setUpdatedAt(DateTimeInterface $updated_at): self
+    public function setUpdatedAt(\DateTimeInterface $updated_at): self
     {
         $this->updated_at = $updated_at;
 
