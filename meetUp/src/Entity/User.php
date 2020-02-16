@@ -96,11 +96,17 @@ class User implements UserInterface
      */
     private $updated_at;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\CommentEvent", mappedBy="user", orphanRemoval=true)
+     */
+    private $commentEvents;
+
     public function __construct()
     {
         $this->teams = new ArrayCollection();
         $this->events = new ArrayCollection();
         $this->teams_member = new ArrayCollection();
+        $this->commentEvents = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -358,6 +364,34 @@ class User implements UserInterface
     public function setUpdatedAt(\DateTimeInterface $updated_at): self
     {
         $this->updated_at = $updated_at;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|CommentEvent[]
+     */
+    public function getCommentEvents(): Collection
+    {
+        return $this->commentEvents;
+    }
+
+    public function addCommentEvent(CommentEvent $commentEvent): self
+    {
+        if (!$this->commentEvents->contains($commentEvent)) {
+            $this->commentEvents[] = $commentEvent;
+            $commentEvent->addUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCommentEvent(CommentEvent $commentEvent): self
+    {
+        if ($this->commentEvents->contains($commentEvent)) {
+            $this->commentEvents->removeElement($commentEvent);
+            $commentEvent->removeUser($this);
+        }
 
         return $this;
     }

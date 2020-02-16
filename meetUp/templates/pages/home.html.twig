@@ -1,12 +1,11 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <div class="jumbotron text-center">
-        <div class="container">
-        </div>
+    <div class="container-fluid">
+        <img src="/images/assets/people-coffee-meeting-team-7096.jpg" class="img-fluid max-width: 100% p-0 m-0" alt="Responsive image">
     </div>
-    <div class="container">
-        <h2>Les derniers événements</h2>
+    <div class="container mt-5">
+        <h2>Les prochains événements</h2>
         <div class="row flex">
             {% for event in properties %}
             <div class="col-3">

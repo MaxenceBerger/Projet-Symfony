@@ -92,9 +92,15 @@ class Event
      */
     private $updated_at;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\CommentEvent", mappedBy="event", orphanRemoval=true)
+     */
+    private $commentEvents;
+
     public function __construct()
     {
         $this->users = new ArrayCollection();
+        $this->commentEvents = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -278,6 +284,37 @@ class Event
     public function setUpdatedAt(\DateTimeInterface $updated_at): self
     {
         $this->updated_at = $updated_at;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|CommentEvent[]
+     */
+    public function getCommentEvents(): Collection
+    {
+        return $this->commentEvents;
+    }
+
+    public function addCommentEvent(CommentEvent $commentEvent): self
+    {
+        if (!$this->commentEvents->contains($commentEvent)) {
+            $this->commentEvents[] = $commentEvent;
+            $commentEvent->setEvent($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCommentEvent(CommentEvent $commentEvent): self
+    {
+        if ($this->commentEvents->contains($commentEvent)) {
+            $this->commentEvents->removeElement($commentEvent);
+            // set the owning side to null (unless already changed)
+            if ($commentEvent->getEvent() === $this) {
+                $commentEvent->setEvent(null);
+            }
+        }
 
         return $this;
     }

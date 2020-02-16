@@ -21,7 +21,7 @@
                             <div class="dropdown-menu" aria-labelledby="dropdownUsers">
                                 {% for event in event.users %}
                                     <p class="dropdown-item text-black-50">
-                                        <img src="/images/users/{{ app.user.filename }}" width="30" height="30" class="d-inline-block align-top rounded-circle border border-info" alt="">
+                                        <img src="/images/users/{{ event.filename }}" width="30" height="30" class="d-inline-block align-top rounded-circle border border-info" alt="">
                                         {{ event.username |capitalize }}
                                     </p>
                                 {% endfor %}
@@ -68,5 +68,30 @@
                 </div>
             </div>
         </div>
+    <div class="jumbotron">
+        <div class="container">
+            <section id="commentaires">
+                <h2 class="mb-2">Commentaires :</h2>
+                <div class="comment">
+                    {% for commentEvent in event.commentEvents %}
+                    <div class="row mt-4 mb-4">
+                        <div class="col-md-3">
+                            <small>{{ commentEvent.createdAt | date ('d/m/Y à H:i') }}</small>
+                        </div>
+                        <div class="col-md-9">
+                            {{ commentEvent.content | raw }}
+                        </div>
+                    </div>
+                        <hr>
+                    {% endfor %}
+
+                    {% for commentEvent in event.commentEvents %}
+                        {{ commentEvent.user.username }}
+                    {% endfor %}
+
+                </div>
+            </section>
+        </div>
     </div>
+</div>
 {% endblock %}

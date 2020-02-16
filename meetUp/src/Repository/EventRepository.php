@@ -27,6 +27,7 @@ class EventRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('event')
             ->setMaxResults(4)
+            ->andWhere('event.start_at BETWEEN CURRENT_DATE() AND CURRENT_DATE()+7')
             ->getQuery()
             ->getResult();
     }
