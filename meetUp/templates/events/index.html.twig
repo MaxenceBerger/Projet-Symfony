@@ -3,12 +3,17 @@
 {% block title 'Tous nos événements' %}
 
 {% block body %}
-    <div class="jumbotron text-center">
+
+    <div class="jumbotron">
         <div class="container">
+            <h1 class="display-4">Tout les événements du moment</h1>
+            <hr class="my-4">
+            <p class="lead">Rejoignez un événement pour tester une nouvelle activité ou partager vos passions.</p>
+            <p class="lead">
+                <a class="btn btn-info btn-lg" href="#events" role="button">En voir plus</a>
         </div>
     </div>
-    <div class="container">
-        <h2>Voir tout les événements</h2>
+    <div class="container" id="events">
         <div class="row flex">
             {% for event in properties %}
                 <div class="col-3">
@@ -18,7 +23,7 @@
                         {% endif %}
                         <div class="card-body">
                             <h5 class="card-title">
-                                <a href="{{ path('events.show', {id: event.id, slug: event.slug}) }}">{{ event.title }}</a>
+                                <a href="{{ path('events.show', {id: event.id, slug: event.slug}) }}" class="text-decoration-none">{{ event.title }}</a>
                             </h5>
                             <p class="card-text">{{ event.city }} ({{ event.postalCode }})</p>
                         </div>
@@ -27,4 +32,5 @@
             {% endfor %}
         </div>
     </div>
+
 {% endblock %}

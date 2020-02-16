@@ -93,7 +93,7 @@ class Event
     private $updated_at;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\CommentEvent", mappedBy="event", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\CommentEvent", mappedBy="event")
      */
     private $commentEvents;
 
@@ -209,10 +209,7 @@ class Event
         return $this;
     }
 
-    /**
-     * @return Collection|User[]
-     */
-    public function getUsers(): Collection
+    public function getUsers()
     {
         return $this->users;
     }

@@ -75,10 +75,10 @@
                 <div class="comment">
                     {% for commentEvent in event.commentEvents %}
                     <div class="row mt-4 mb-4">
-                        <div class="col-md-3">
+                        <div class="col-md-2">
                             <small>{{ commentEvent.createdAt | date ('d/m/Y à H:i') }}</small>
                         </div>
-                        <div class="col-md-9">
+                        <div class="col-md-10">
                             {{ commentEvent.content | raw }}
                         </div>
                     </div>
@@ -86,7 +86,7 @@
                     {% endfor %}
                     {{ form_start(commentEventForm) }}
                     {{ form_row(commentEventForm.content) }}
-                    <button type="submit" class="btn btn-success"> Valider</button>
+                    <button type="submit" class="btn btn-info"> Valider</button>
                     {{ form_end(commentEventForm) }}
                 </div>
             </section>

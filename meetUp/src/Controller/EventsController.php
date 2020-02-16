@@ -53,18 +53,21 @@ class EventsController extends AbstractController
      */
     public function show(Event $event, string $slug, Request $request): Response
     {
-        $user = $this->getDoctrine()
-            ->getRepository(User::class)
-            ->find($this->getUser());
-
         $comment = new CommentEvent();
         $form = $this->createForm(CommentEventType::class, $comment);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()){
-            $comment->setCreatedAt(new \DateTime())
-                    ->setEvent($event)
-                    ->addUser($user);
+
+            $user = $this->getDoctrine()
+                ->getRepository(User::class)
+                ->find($this->getUser());
+
+            $comment->setCreatedAt(new \DateTime());
+            $comment->setEvent($event);
+            $comment->addUser($user);
+
+            $this->getDoctrine()->getManager()->persist($comment);
             $this->getDoctrine()->getManager()->flush();
         }
 
@@ -74,12 +77,10 @@ class EventsController extends AbstractController
                 'slug' => $event->getSlug()
             ], 301);
         }
-        $events = $this->repository->findAll();
         return $this->render('events/show.html.twig', [
+            'commentEventForm' => $form->createView(),
             'event' => $event,
-            'events' => $events,
-            'current_menu' => 'event',
-            'commentEventForm' => $form->createView()
+            'current_menu' => 'event'
         ]);
     }
     /**

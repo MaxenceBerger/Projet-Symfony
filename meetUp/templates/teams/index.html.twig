@@ -8,23 +8,32 @@
             {{ message }}
         </div>
     {% endfor %}
-    <div class="container">
-        <h1>Voir tous nos Groupes</h1>
-
-        {% for team in properties %}
-            <div class="col-3">
-                <div class="card mt-4">
-                    {% if team.filename %}
-                        <img src="/images/teams/{{ team.filename }}" alt="card-img-top" style="width: 100%; height: 125px">
-                    {% endif %}
-                    <div class="card-body">
-                        <h5 class="card-title">
-                            <a href="{{ path('teams.show', {id: team.id, slug: team.slug}) }}">{{ team.name }}</a>
-                        </h5>
-                        <p class="card-text">{{ team.description }}</p>
+    <div class="jumbotron">
+        <div class="container">
+            <h1 class="display-4">Tout les groupes du moment</h1>
+            <hr class="my-4">
+            <p class="lead">Rejoignez un événement pour tester une nouvelle activité ou partager vos passions.</p>
+            <p class="lead">
+                <a class="btn btn-info btn-lg" href="#groups" role="button">En voir plus</a>
+        </div>
+    </div>
+    <div class="container" id="groups">
+        <div class="row flex">
+            {% for team in properties %}
+                <div class="col-3">
+                    <div class="card mt-4">
+                        {% if team.filename %}
+                            <img src="/images/teams/{{ team.filename }}" alt="card-img-top" style="width: 100%; height: 125px">
+                        {% endif %}
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                <a href="{{ path('teams.show', {id: team.id, slug: team.slug}) }}" class="text-decoration-none">{{ team.name }}</a>
+                            </h5>
+                            <span class="badge badge-pill badge-info">{{ team.thematic }}</span>
+                        </div>
                     </div>
                 </div>
-            </div>
-        {% endfor %}
+            {% endfor %}
+        </div>
     </div>
 {% endblock %}

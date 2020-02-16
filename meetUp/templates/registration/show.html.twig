@@ -5,26 +5,53 @@
 {% block body %}
 
     <div class="jumbotron">
-        <div class="container mt-3">
-            <h2>Mon profil</h2>
-            <div class="row">
-                <div class="col-md-4">
-                    {{ app.user.username }}
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-6">
-                    {{ app.user.firstname }}
-                </div>
-                <div class="col-md-6">
-                    {{ app.user.lastname }}
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    {{ app.user.email }}
+        <div class="container mt-5 mb-5">
+            <div class="card border-info mb-3">
+                <div class="card-header"><h2>Mon profil</h2></div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-7">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <h5 class="card-title text-info">Pseudo : </h5>
+                                </div>
+                                <div class="col-md-9">
+                                    <p class="card-text">{{ app.user.username | capitalize}}</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <h5 class="card-title text-info">Nom : </h5>
+                                </div>
+                                <div class="col-md-9">
+                                    <p class="card-text">{{ app.user.firstname | capitalize}}</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <h5 class="card-title text-info">Prénom : </h5>
+                                </div>
+                                <div class="col-md-9">
+                                    <p class="card-text">{{ app.user.lastname | capitalize}}</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <h5 class="card-title text-info">Email : </h5>
+                                </div>
+                                <div class="col-md-9">
+                                    <p class="card-text">{{ app.user.email }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                            <img src="/images/users/{{ app.user.filename }}" width="100%" height="250px" class="d-inline-block align-top rounded border border-info" alt="">
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+
+
 {% endblock %}

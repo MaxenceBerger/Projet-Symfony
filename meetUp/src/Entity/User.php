@@ -97,7 +97,7 @@ class User implements UserInterface
     private $updated_at;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\CommentEvent", mappedBy="user", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\CommentEvent", mappedBy="user")
      */
     private $commentEvents;
 
