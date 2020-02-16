@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon Profil{% endblock %}
+
+{% block body %}
+
+    <div class="jumbotron">
+        <div class="container mt-3">
+            <h2>Mon profil</h2>
+            <div class="row">
+                <div class="col-md-4">
+                    {{ app.user.username }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    {{ app.user.firstname }}
+                </div>
+                <div class="col-md-6">
+                    {{ app.user.lastname }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    {{ app.user.email }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

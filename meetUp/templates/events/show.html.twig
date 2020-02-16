@@ -13,7 +13,20 @@
                     </div>
                     <div class="col-md-4">
                         <h1>{{ event.title }}</h1>
-                        <a href="{{ path('events.join', {id: event.id, slug: event.slug}) }}" class="btn btn-primary mt-5">S'inscrire</a>
+                        <a href="{{ path('events.join', {id: event.id, slug: event.slug}) }}" class="btn btn-info mt-5">S'inscrire</a>
+                        <div class="dropdown">
+                            <button class="btn btn-secondary dropdown-toggle mt-2" type="button" id="dropdownUsers" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Liste des participants
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownUsers">
+                                {% for event in event.users %}
+                                    <p class="dropdown-item text-black-50">
+                                        <img src="/images/users/{{ app.user.filename }}" width="30" height="30" class="d-inline-block align-top rounded-circle border border-info" alt="">
+                                        {{ event.username |capitalize }}
+                                    </p>
+                                {% endfor %}
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -50,10 +63,6 @@
                             <tr>
                                 <td>Nombre de places :</td>
                                 <td>{{ event.capacity }}</td>
-                            </tr>
-                            <tr>
-                                <td>Users :</td>
-                                <td>{{ event.city }}</td>
                             </tr>
                         </table>
                 </div>

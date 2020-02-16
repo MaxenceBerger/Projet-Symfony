@@ -30,11 +30,18 @@ class EventRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
-
-    public function findUser()
+    public function findUsername($usernameId)
     {
+        $entityManager = $this->getEntityManager();
 
+        $query = $entityManager->createQuery(
+            'SELECT u FROM App\Entity\User u WHERE u.id = :id'
+        )
+            ->setParameter('id', $usernameId);
+            return $query->getResult();
     }
+
+    // SELECT u FROM MyProject\Model\User u WHERE u.age > 20
 
     // /**
     //  * @return Event[] Returns an array of Event objects

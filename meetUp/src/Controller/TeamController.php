@@ -5,7 +5,6 @@ namespace App\Controller;
 use App\Entity\Team;
 use App\Entity\User;
 use App\Repository\TeamRepository;
-use Doctrine\Common\EventManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -52,6 +51,8 @@ class TeamController extends AbstractController
      */
     public function show(Team $team, string $slug): Response
     {
+        $properties = $this->repository->findAll();
+
         if ($team->getSlug() !== $slug) {
             return $this->redirectToRoute('teams.show', [
                 'id' => $team->getId(),
@@ -59,7 +60,9 @@ class TeamController extends AbstractController
         }
         return $this->render('teams/show.html.twig', [
             'team' => $team,
-            'current_menu' => 'team'
+            'current_menu' => 'team',
+            'properties' => $properties,
+
         ]);
     }
 

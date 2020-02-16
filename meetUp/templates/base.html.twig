@@ -3,7 +3,10 @@
     <head>
         <meta charset="UTF-8">
         <title>{% block title %}Welcome!{% endblock %}</title>
+
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
         {% block stylesheets %}{% endblock %}
     </head>
     <body>
@@ -30,38 +33,30 @@
                             </a>
                         </li>
                         {% endif %}
-                        <li class="nav-item">
-                            {% if is_granted('ROLE_ADMIN') %}
-                                <a class="nav-link
-                               {% if current_menu is defined and current_menu == "admin.event" %}active{% endif %}"
-                                   href="{{ path('admin.events.index') }}">
-                                    Gestion des événements
-                                </a>
-                            {% endif %}
-                        </li>
-                        <li class="nav-item">
-                            {% if is_granted('ROLE_ADMIN') %}
-                                <a class="nav-link
-                               {% if current_menu is defined and current_menu == "admin.team" %}active{% endif %}"
-                                   href="{{ path('admin.teams.index') }}">
-                                    Gestion des groupes
-                                </a>
-                            {% endif %}
-                        </li>
                     </ul>
                     {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
                     <ul class="navbar-nav">
                         <li class="navbar-item">
-                            <a href="{{ path('home') }}" class="nav-link">Mon Profil</a>
+                            <div class="btn-group dropleft">
+                                <button type="button" class="btn btn-info dropdown-toggle navbar-brand" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <img src="/images/users/{{ app.user.filename }}" width="30" height="30" class="d-inline-block align-top rounded-circle border border-white" alt="">
+                                    {{ app.user.username | capitalize}}
+                                </button>
+                                <div class="dropdown-menu">
+                                    {% if is_granted('ROLE_ADMIN') %}
+                                        <a class="dropdown-item" href="{{ path('admin.events.index') }}">Gestion des événements</a>
+                                        <a class="dropdown-item" href="{{ path('admin.teams.index') }}">Gestion des groupes</a>
+                                    {% endif %}
+                                    <a class="dropdown-item" href="{{ path('profile.show', {id: app.user.id}) }}">Mon Profil</a>
+                                    <a class="dropdown-item" href="{{ path('profile.edit', {id: app.user.id}) }}">Modifier Profil</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a href="{{ path('logout') }}" class="dropdown-item">Se déconnecter</a>
+                                </div>
+                            </div>
                         </li>
                     </ul>
                     {% endif %}
                     {% if app.user %}
-                        <ul class="navbar-nav">
-                            <li class="navbar-item">
-                                <a href="{{ path('logout') }}" class="nav-link">Se déconnecter</a>
-                            </li>
-                        </ul>
                         {% else %}
                             <ul class="navbar-nav">
                                 <li class="navbar-item">
@@ -73,9 +68,10 @@
             </nav>
         </header>
         {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-        <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+        {% block javascripts %}
+            <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+            <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+        {% endblock %}
     </body>
 </html>

@@ -41,14 +41,17 @@ class EventsController extends AbstractController
      */
     public function show(Event $event, string $slug): Response
     {
+
         if ($event->getSlug() !== $slug) {
             return $this->redirectToRoute('events.show', [
                 'id' => $event->getId(),
                 'slug' => $event->getSlug()
             ], 301);
         }
+        $events = $this->repository->findAll();
         return $this->render('events/show.html.twig', [
             'event' => $event,
+            'events' => $events,
             'current_menu' => 'event'
         ]);
     }
