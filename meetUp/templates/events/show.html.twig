@@ -84,11 +84,10 @@
                     </div>
                         <hr>
                     {% endfor %}
-
-                    {% for commentEvent in event.commentEvents %}
-                        {{ commentEvent.user.username }}
-                    {% endfor %}
-
+                    {{ form_start(commentEventForm) }}
+                    {{ form_row(commentEventForm.content) }}
+                    <button type="submit" class="btn btn-success"> Valider</button>
+                    {{ form_end(commentEventForm) }}
                 </div>
             </section>
         </div>

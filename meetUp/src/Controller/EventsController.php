@@ -1,11 +1,15 @@
 <?php
 namespace App\Controller;
 
+use App\Entity\CommentEvent;
 use App\Entity\Event;
-use App\Entity\Team;
 use App\Entity\User;
+use App\Form\CommentEventType;
 use App\Repository\EventRepository;
+use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\Persistence\ObjectManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -16,9 +20,15 @@ class EventsController extends AbstractController
      */
     private $repository;
 
-    public function __construct(EventRepository $repository)
+    /**
+     * @var EntityManagerInterface
+     */
+    private $em;
+
+    public function __construct(EventRepository $repository, EntityManagerInterface $em)
     {
         $this->repository = $repository;
+        $this->em = $em;
     }
 
     /**
@@ -37,10 +47,26 @@ class EventsController extends AbstractController
      * @Route("/evenements/{slug}-{id}", name="events.show", requirements={"slug": "[a-z0-9\-]*"})
      * @param Event $event
      * @param string $slug
+     * @param Request $request
      * @return Response
+     * @throws \Exception
      */
-    public function show(Event $event, string $slug): Response
+    public function show(Event $event, string $slug, Request $request): Response
     {
+        $user = $this->getDoctrine()
+            ->getRepository(User::class)
+            ->find($this->getUser());
+
+        $comment = new CommentEvent();
+        $form = $this->createForm(CommentEventType::class, $comment);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()){
+            $comment->setCreatedAt(new \DateTime())
+                    ->setEvent($event)
+                    ->addUser($user);
+            $this->getDoctrine()->getManager()->flush();
+        }
 
         if ($event->getSlug() !== $slug) {
             return $this->redirectToRoute('events.show', [
@@ -52,7 +78,8 @@ class EventsController extends AbstractController
         return $this->render('events/show.html.twig', [
             'event' => $event,
             'events' => $events,
-            'current_menu' => 'event'
+            'current_menu' => 'event',
+            'commentEventForm' => $form->createView()
         ]);
     }
     /**
