@@ -4,11 +4,14 @@
     {% include 'include/flashes.html.twig' %}
     <div class="jumbotron">
         <div class="container mt-3">
-            <h2>Editer l'événement</h2>
+            <h2 class="mb-5">Editer l'événement</h2>
             {{ form_start(form) }}
             <div class="row">
-                <div class="col-md-4">
+                <div class="col-md-6">
                     {{ form_row(form.name) }}
+                </div>
+                <div class="col-md-6">
+                    {{ form_row(form.thematic) }}
                 </div>
             </div>
             <div class="row">
@@ -17,13 +20,13 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-2">
-                    {{ form_row(form.thematic) }}
+                <div class="col-md-12">
+                    {{ form_row(form.imageFile) }}
                 </div>
             </div>
+            {{ form_widget(form) }}
+            <button class="btn btn-info mt-5">Sauvgarder</button>
+            {{ form_end(form) }}
         </div>
-        {{ form_widget(form) }}
-        <button class="btn btn-primary">Sauvgarder</button>
-        {{ form_end(form) }}
     </div>
 {% endblock %}

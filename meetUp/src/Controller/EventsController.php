@@ -115,6 +115,43 @@ class EventsController extends AbstractController
             $user->addEvent($event);
 
             $this->getDoctrine()->getManager()->flush();
+            $this->addFlash('success', "Vous avez rejoint l'événement");
+
+        }
+
+        return $this->render('events/show.html.twig', [
+            'commentEventForm' => $form->createView(),
+            'event' => $event,
+            'comments' => $comments,
+            'current_menu' => 'event'
+        ]);
+    }
+
+    /**
+     * @Route("/evenements/{slug}-{id}/quit", name="events.quit", requirements={"slug": "[a-z0-9\-]*"})
+     * @param Event $event
+     * @param string $slug
+     * @return Response
+     */
+    public function quit(Event $event, string $slug): Response
+    {
+        $comment = new CommentEvent();
+        $form = $this->createForm(CommentEventType::class, $comment);
+
+        $event = $this->getDoctrine()
+            ->getRepository(Event::class)
+            ->find($event);
+
+        $comments = $this->commentEventRepository->findBy(['event' => $event->getId()]);
+
+        if ($event->getSlug() === $slug) {
+            $user = $this->getUser();
+            $event->removeUser($user);
+            $user->addEvent($event);
+
+            $this->getDoctrine()->getManager()->flush();
+            $this->addFlash('success', "Vous avez quitter l'événement");
+
         }
 
         return $this->render('events/show.html.twig', [

@@ -4,11 +4,14 @@
 
     <div class="jumbotron">
         <div class="container mt-3">
-            <h2>Créer un Groupe</h2>
+            <h2 class="mb-5">Créer un Groupe</h2>
             {{ form_start(form) }}
             <div class="row">
-                <div class="col-md-4">
+                <div class="col-md-6">
                     {{ form_row(form.name) }}
+                </div>
+                <div class="col-md-6">
+                    {{ form_row(form.thematic) }}
                 </div>
             </div>
             <div class="row">
@@ -21,14 +24,9 @@
                     {{ form_row(form.imageFile) }}
                 </div>
             </div>
-            <div class="row">
-                <div class="col-md-2">
-                    {{ form_row(form.thematic) }}
-                </div>
-            </div>
-        </div>
         {{ form_widget(form) }}
-        <button class="btn btn-primary">Sauvgarder</button>
+        <button class="btn btn-info mt-5">Sauvgarder</button>
         {{ form_end(form) }}
+        </div>
     </div>
 {% endblock %}

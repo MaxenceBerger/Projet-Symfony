@@ -16,18 +16,8 @@
     <div class="container" id="events">
         <div class="row flex">
             {% for event in properties %}
-                <div class="col-3">
-                    <div class="card mt-4">
-                        {% if event.filename %}
-                            <img src="/images/events/{{ event.filename }}" alt="card-img-top" style="width: 100%; height: 150px">
-                        {% endif %}
-                        <div class="card-body">
-                            <h5 class="card-title">
-                                <a href="{{ path('events.show', {id: event.id, slug: event.slug}) }}" class="text-decoration-none">{{ event.title }}</a>
-                            </h5>
-                            <p class="card-text">{{ event.city }} ({{ event.postalCode }})</p>
-                        </div>
-                    </div>
+                <div class="col-md-4">
+                    {% include 'events/_event.html.twig' %}
                 </div>
             {% endfor %}
         </div>

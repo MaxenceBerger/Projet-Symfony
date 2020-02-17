@@ -77,11 +77,6 @@ class User implements UserInterface
     private $teams;
 
     /**
-     * @ORM\Column(type="boolean")
-     */
-    private $is_admin_team = 0;
-
-    /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Event", mappedBy="users")
      */
     private $events;
@@ -101,12 +96,18 @@ class User implements UserInterface
      */
     private $commentEvents;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\CommentTeam", mappedBy="user")
+     */
+    private $commentTeams;
+
     public function __construct()
     {
         $this->teams = new ArrayCollection();
         $this->events = new ArrayCollection();
         $this->teams_member = new ArrayCollection();
         $this->commentEvents = new ArrayCollection();
+        $this->commentTeams = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -252,18 +253,6 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getIsAdminTeam(): ?bool
-    {
-        return $this->is_admin_team;
-    }
-
-    public function setIsAdminTeam(bool $is_admin_team): self
-    {
-        $this->is_admin_team = $is_admin_team;
-
-        return $this;
-    }
-
     /**
      * @return Collection|Event[]
      */
@@ -346,6 +335,7 @@ class User implements UserInterface
     /**
      * @param File|null $imageFile
      * @return User
+     * @throws \Exception
      */
     public function setImageFile(?File $imageFile): User
     {
@@ -391,6 +381,34 @@ class User implements UserInterface
         if ($this->commentEvents->contains($commentEvent)) {
             $this->commentEvents->removeElement($commentEvent);
             $commentEvent->removeUser($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|CommentTeam[]
+     */
+    public function getCommentTeams(): Collection
+    {
+        return $this->commentTeams;
+    }
+
+    public function addCommentTeam(CommentTeam $commentTeam): self
+    {
+        if (!$this->commentTeams->contains($commentTeam)) {
+            $this->commentTeams[] = $commentTeam;
+            $commentTeam->addUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCommentTeam(CommentTeam $commentTeam): self
+    {
+        if ($this->commentTeams->contains($commentTeam)) {
+            $this->commentTeams->removeElement($commentTeam);
+            $commentTeam->removeUser($this);
         }
 
         return $this;

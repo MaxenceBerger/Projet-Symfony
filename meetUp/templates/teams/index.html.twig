@@ -12,7 +12,7 @@
         <div class="container">
             <h1 class="display-4">Tous les groupes du moment</h1>
             <hr class="my-4">
-            <p class="lead">Rejoignez un événement pour tester une nouvelle activité ou partager vos passions.</p>
+            <p class="lead">Trouvez tous les groupes Meetup et rejoignez des Meetups sur ce thème !</p>
             <p class="lead">
                 <a class="btn btn-info btn-lg" href="#groups" role="button">En voir plus</a>
         </div>
@@ -20,18 +20,8 @@
     <div class="container" id="groups">
         <div class="row flex">
             {% for team in properties %}
-                <div class="col-3">
-                    <div class="card mt-4">
-                        {% if team.filename %}
-                            <img src="/images/teams/{{ team.filename }}" alt="card-img-top" style="width: 100%; height: 125px">
-                        {% endif %}
-                        <div class="card-body">
-                            <h5 class="card-title">
-                                <a href="{{ path('teams.show', {id: team.id, slug: team.slug}) }}" class="text-decoration-none">{{ team.name }}</a>
-                            </h5>
-                            <span class="badge badge-pill badge-info">{{ team.thematic }}</span>
-                        </div>
-                    </div>
+                <div class="col-md-4">
+                    {% include 'teams/_team.html.twig' %}
                 </div>
             {% endfor %}
         </div>

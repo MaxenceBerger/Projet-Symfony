@@ -1,0 +1,13 @@
+<div class="card mt-4 mb-4 shadow">
+    <a href="{{ path('teams.show', {id: team.id, slug: team.slug}) }}" class="text-decoration-none">
+        {% if team.filename %}
+            <img src="/images/teams/{{ team.filename }}" alt="card-img-top" style="width: 100%; height: 225px">
+        {% endif %}
+        <div class="card-body">
+            <h5 class="card-title text-dark">
+                {{ team.name }}
+            </h5>
+            <span class="badge badge-pill badge-info">{{ team.thematic }}</span>
+        </div>
+    </a>
+</div>

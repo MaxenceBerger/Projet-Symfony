@@ -15,9 +15,12 @@
                     <div class="col-md-4">
                         <h1>{{ event.title }}</h1>
                         {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-
-                        <a href="{{ path('events.join', {id: event.id, slug: event.slug}) }}" class="btn btn-info mt-5">S'inscrire</a>
-                        <div class="dropdown">
+                            {% if app.user is not null and app.user in event.users  %}
+                                <a href="{{ path('events.quit', {id: event.id, slug: event.slug}) }}" class="btn btn-info mt-5">Quitter</a>
+                            {% else %}
+                                <a href="{{ path('events.join', {id: event.id, slug: event.slug}) }}" class="btn btn-info mt-5">Rejoindre</a>
+                            {% endif %}
+                            <div class="dropdown">
                             <button class="btn btn-secondary dropdown-toggle mt-2" type="button" id="dropdownUsers" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Liste des participants
                             </button>
@@ -46,14 +49,14 @@
                         <table class="table table-striped">
                             <tr>
                                 <td>Début :</td>
-                                <td>{{ event.startAt |date("d/m/Y") }}</td>
+                                <td>{{ event.startAt |date("d/m/Y à H:i") }}</td>
                             </tr>
                             <tr>
                                 <td>Fin :</td>
-                                <td>{{ event.finishAt |date("d/m/Y") }}</td>
+                                <td>{{ event.finishAt |date("d/m/Y à H:i") }}</td>
                             </tr>
                             <tr>
-                                <td>Addresse :</td>
+                                <td>Adresse :</td>
                                 <td>{{ event.address }}</td>
                             </tr>
                             <tr>

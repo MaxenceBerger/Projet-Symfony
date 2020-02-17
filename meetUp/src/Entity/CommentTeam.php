@@ -5,9 +5,9 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\CommentEventRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\CommentTeamRepository")
  */
-class CommentEvent
+class CommentTeam
 {
     /**
      * @ORM\Id()
@@ -17,13 +17,13 @@ class CommentEvent
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Event")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Team")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $event;
+    private $team;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="commentEvents")
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="commentTeams")
      * @ORM\JoinColumn(nullable=false)
      */
     private $user;
@@ -43,14 +43,14 @@ class CommentEvent
         return $this->id;
     }
 
-    public function getEvent(): ?Event
+    public function getTeam(): ?Team
     {
-        return $this->event;
+        return $this->team;
     }
 
-    public function setEvent(?Event $event): self
+    public function setTeam(?Team $team): self
     {
-        $this->event = $event;
+        $this->team = $team;
 
         return $this;
     }

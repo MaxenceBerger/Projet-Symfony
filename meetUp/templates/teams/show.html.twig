@@ -3,41 +3,88 @@
 {% block title team.name %}
 
 {% block body %}
-        <div class="jumbotron">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-8">
-                        {% if team.filename %}
-                            <img src="/images/teams/{{ team.filename }}" alt="card-img-top" style="width: 100%; height: auto">
-                        {% endif %}
-                    </div>
-                    <div class="col-md-4">
-                        <h1>{{ team.name }}</h1>
-                        <a href="{{ path('teams.join', {id: team.id, slug: team.slug}) }}" class="btn btn-primary">Rejoindre</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="container mt-4">
+    {% include 'include/flashes.html.twig' %}
+    <div class="jumbotron">
+        <div class="container">
             <div class="row">
                 <div class="col-md-8">
-                    <h2 class="mb-2">Description :</h2>
-                    <p>{{ team.description }}</p>
+                    {% if team.filename %}
+                        <img src="/images/teams/{{ team.filename }}" alt="card-img-top" style="width: 100%; height: auto">
+                    {% endif %}
                 </div>
                 <div class="col-md-4">
-                    <h2 class="mb-2">Informations :</h2>
-                        <table class="table table-striped">
-                            <tr>
-                                <td>
-                                    <p><strong>Thématique : </strong>{{ team.thematic }}</p>
-                                </td>
-                                <td>
-                                    <p><strong>Inscrit : </strong></p>
-                                </td>
-                            </tr>
-                        </table>
+                    <h1>{{ team.name }}</h1>
+                    {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+                        {% if app.user is not null and app.user in team.users  %}
+                            <a href="{{ path('teams.quit', {id: team.id, slug: team.slug}) }}" class="btn btn-info mt-5">Quitter</a>
+                        {% else %}
+                            <a href="{{ path('teams.join', {id: team.id, slug: team.slug}) }}" class="btn btn-info mt-5">Rejoindre</a>
+                        {% endif %}
+                        <div class="dropdown">
+                            <button class="btn btn-secondary dropdown-toggle mt-2" type="button" id="dropdownUsers" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Liste des participants
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownUsers">
+                                {% for team in team.users %}
+                                    <p class="dropdown-item text-black-50">
+                                        <img src="/images/users/{{ team.filename }}" width="30" height="30" class="d-inline-block align-top rounded-circle border border-info" alt="">
+                                        {{ team.username |capitalize }}
+                                    </p>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    {% endif %}
                 </div>
             </div>
         </div>
     </div>
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-md-8">
+                <h2 class="mb-2">Description :</h2>
+                <p>{{ team.description | raw }}</p>
+            </div>
+            <div class="col-md-4">
+                <h2 class="mb-2">Informations :</h2>
+                <table class="table table-striped">
+                    <tr>
+                        <td>Thématique :</td>
+                        <td><span class="badge badge-pill badge-info">{{ team.thematic }}</span></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="jumbotron">
+        <div class="container">
+            <section id="commentaires">
+                <h2 class="mb-2">Commentaires :</h2>
+                {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+                    <div class="comment">
+
+                        {% for comment in comments %}
+                            <div class="row mt-4 mb-4">
+                                <div class="col-md-2">
+                                    <small>Commenté par&nbsp;:&nbsp;{{ comment.user.username | capitalize }}</small>
+                                    <small>{{ comment.createdAt | date ('d/m/Y à H:i') }}</small>
+                                </div>
+                                <div class="col-md-10">
+                                    {{ comment.content | raw }}
+                                </div>
+                            </div>
+                            <hr>
+                        {% endfor %}
+
+                        {{ form_start(commentTeamForm) }}
+                            {{ form_row(commentTeamForm.content) }}
+                            <button type="submit" class="btn btn-info"> Valider</button>
+                        {{ form_end(commentTeamForm) }}
+                    </div>
+                {% else %}
+                    <h4>Veuillez vous connecter pour voir et rediger des commentaires.</h4>
+                {% endif %}
+            </section>
+        </div>
+    </div>
+</div>
 {% endblock %}

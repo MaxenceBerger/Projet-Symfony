@@ -2,7 +2,6 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Event;
-use App\Entity\User;
 use App\Form\EventType;
 use App\Repository\EventRepository;
 use Doctrine\ORM\EntityManagerInterface;

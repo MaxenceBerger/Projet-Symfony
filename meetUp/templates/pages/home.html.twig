@@ -1,29 +1,41 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <div class="container-fluid">
-        <img src="/images/assets/people-coffee-meeting-team-7096.jpg" class="img-fluid max-width: 100% p-0 m-0" alt="Responsive image">
-    </div>
-    <div class="container mt-5">
-        <h2>Les événements prévus pour cette semaine</h2>
+    <section class="text-center" style="background: no-repeat url('/images/assets/87015733_707479833119179_1291845743669149696_n.jpg'); width: auto; height: 25rem; background-size: cover;">
+        <div class="container pt-5 align-items-center">
+            <h1 class="jumbotron-heading pt-5 text-light font-weight-bold" style="text-shadow: 0px 0px 5px #000000;">Le monde vous tend les bras</h1>
+            <p class="lead text-light" style="text-shadow: 0px 0px 3px #000000;">Partagez vos passions et faites bouger votre ville ! Meetup vous aide à rencontrer des personnes près de chez vous, autour de vos centres d'intérêt.</p>
+            <p>
+                <a href="#seeMoreEvent" class="btn btn-info my-2">En voir plus</a>
+            </p>
+        </div>
+    </section>
+    <div class="container mt-5" id="seeMoreEvent">
+        <h2 class="mb-4">Les événements prévus pour cette semaine</h2>
         <div class="container" id="groups">
             <div class="row flex">
                 {% for event in properties %}
-                <div class="col-3">
-                    <div class="card mt-4 mb-4">
-                        {% if event.filename %}
-                            <img src="/images/events/{{ event.filename }}" alt="card-img-top" style="width: 100%; height: 125px">
-                        {% endif %}
-                        <div class="card-body">
-                            <h5 class="card-title">
-                                <a href="{{ path('events.show', {id: event.id, slug: event.slug}) }}" class="text-decoration-none">{{ event.title }}</a>
-                            </h5>
-                            <p class="card-text">{{ event.city }} ({{ event.postalCode }})</p>
+                    <div class="col-4">
+                        <div class="card mt-3 mb-3 shadow">
+                            <a href="{{ path('events.show', {id: event.id, slug: event.slug}) }}" class="text-decoration-none text-dark">
+                                {% if event.filename %}
+                                    <img src="/images/events/{{ event.filename }}" alt="card-img-top" style="width: 100%; height: 180px">
+                                {% endif %}
+                                <div class="card-body">
+                                    <h5 class="card-title">
+                                        {{ event.title }}
+                                    </h5>
+                                    <small>
+                                        <p class="card-text text-secondary mt-4">Le {{ event.startAt |date("d/m/Y à H:i") }}</p>
+                                    </small>
+                                    <p class="card-text text-secondary">{{ event.city }} ({{ event.postalCode }})</p>
+                                </div>
+                            </a>
                         </div>
                     </div>
-                </div>
                 {% endfor %}
             </div>
         </div>
     </div>
 {% endblock %}
+

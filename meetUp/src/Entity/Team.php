@@ -203,7 +203,7 @@ class Team
      * @return Team
      * @throws Exception
      */
-    public function setImageFile(?File $imageFile): User
+    public function setImageFile(?File $imageFile): Team
     {
         $this->imageFile = $imageFile;
         if ($this->imageFile instanceof UploadedFile) {
