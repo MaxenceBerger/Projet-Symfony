@@ -5,20 +5,25 @@
         <img src="/images/assets/people-coffee-meeting-team-7096.jpg" class="img-fluid max-width: 100% p-0 m-0" alt="Responsive image">
     </div>
     <div class="container mt-5">
-        <h2>Les prochains événements</h2>
-        <div class="row flex">
-            {% for event in properties %}
-            <div class="col-3">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">
-                            <a href="{{ path('events.show', {id: event.id, slug: event.slug}) }}">{{ event.title }}</a>
-                        </h5>
-                        <p class="card-text">{{ event.city }} ({{ event.postalCode }})</p>
+        <h2>Les événements prévus pour cette semaine</h2>
+        <div class="container" id="groups">
+            <div class="row flex">
+                {% for event in properties %}
+                <div class="col-3">
+                    <div class="card mt-4 mb-4">
+                        {% if event.filename %}
+                            <img src="/images/events/{{ event.filename }}" alt="card-img-top" style="width: 100%; height: 125px">
+                        {% endif %}
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                <a href="{{ path('events.show', {id: event.id, slug: event.slug}) }}" class="text-decoration-none">{{ event.title }}</a>
+                            </h5>
+                            <p class="card-text">{{ event.city }} ({{ event.postalCode }})</p>
+                        </div>
                     </div>
                 </div>
+                {% endfor %}
             </div>
-            {% endfor %}
         </div>
     </div>
 {% endblock %}

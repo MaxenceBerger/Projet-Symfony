@@ -12,7 +12,11 @@
     <body>
         <header>
             <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+                {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+                <a class="navbar-brand mr-5" href="{{ path('events.index') }}">Meet Up</a>
+                {% else %}
                 <a class="navbar-brand mr-5" href="{{ path('home') }}">Meet Up</a>
+                {% endif %}
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -43,9 +47,15 @@
                                     {{ app.user.username | capitalize}}
                                 </button>
                                 <div class="dropdown-menu">
-                                    {% if is_granted('ROLE_ADMIN') %}
+                                    {% if is_granted('ROLE_ADMIN_BOTH') %}
                                         <a class="dropdown-item" href="{{ path('admin.events.index') }}">Gestion des événements</a>
                                         <a class="dropdown-item" href="{{ path('admin.teams.index') }}">Gestion des groupes</a>
+                                    {% endif %}
+                                    {% if is_granted('ROLE_ADMIN_TEAM') %}
+                                        <a class="dropdown-item" href="{{ path('admin.teams.index') }}">Gestion des groupes</a>
+                                    {% endif %}
+                                    {% if is_granted('ROLE_ADMIN_EVENT') %}
+                                        <a class="dropdown-item" href="{{ path('admin.events.index') }}">Gestion des événements</a>
                                     {% endif %}
                                     <a class="dropdown-item" href="{{ path('profile.show', {id: app.user.id}) }}">Mon Profil</a>
                                     <a class="dropdown-item" href="{{ path('profile.edit', {id: app.user.id}) }}">Modifier Profil</a>

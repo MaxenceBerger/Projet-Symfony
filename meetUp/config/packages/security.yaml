@@ -28,8 +28,9 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        - { path: ^/admin, roles: ROLE_ADMIN }
-        #s- { path: ^/profile, roles: ROLE_USER }
+        - { path: ^/admin/team, roles: ROLE_ADMIN_TEAM }
+        - { path: ^/admin/events, roles: ROLE_ADMIN_EVENT }
+        - { path: ^/admin, roles: ROLE_ADMIN_BOTH }
 
     encoders:
         App\Entity\User:

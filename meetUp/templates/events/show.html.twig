@@ -3,7 +3,8 @@
 {% block title event.title %}
 
 {% block body %}
-        <div class="jumbotron">
+    {% include 'include/flashes.html.twig' %}
+    <div class="jumbotron">
             <div class="container">
                 <div class="row">
                     <div class="col-md-8">
@@ -13,6 +14,8 @@
                     </div>
                     <div class="col-md-4">
                         <h1>{{ event.title }}</h1>
+                        {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+
                         <a href="{{ path('events.join', {id: event.id, slug: event.slug}) }}" class="btn btn-info mt-5">S'inscrire</a>
                         <div class="dropdown">
                             <button class="btn btn-secondary dropdown-toggle mt-2" type="button" id="dropdownUsers" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -27,6 +30,7 @@
                                 {% endfor %}
                             </div>
                         </div>
+                        {% endif %}
                     </div>
                 </div>
             </div>
@@ -72,14 +76,17 @@
         <div class="container">
             <section id="commentaires">
                 <h2 class="mb-2">Commentaires :</h2>
+                {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
                 <div class="comment">
-                    {% for commentEvent in event.commentEvents %}
+
+                    {% for comment in comments %}
                     <div class="row mt-4 mb-4">
                         <div class="col-md-2">
-                            <small>{{ commentEvent.createdAt | date ('d/m/Y à H:i') }}</small>
+                            <small>Commenté par&nbsp;:&nbsp;{{ comment.user.username | capitalize }}</small>
+                            <small>{{ comment.createdAt | date ('d/m/Y à H:i') }}</small>
                         </div>
                         <div class="col-md-10">
-                            {{ commentEvent.content | raw }}
+                            {{ comment.content | raw }}
                         </div>
                     </div>
                         <hr>
@@ -89,6 +96,9 @@
                     <button type="submit" class="btn btn-info"> Valider</button>
                     {{ form_end(commentEventForm) }}
                 </div>
+                {% else %}
+                    <h4>Veuillez vous connecter pour voir et rediger des commentaires.</h4>
+                {% endif %}
             </section>
         </div>
     </div>

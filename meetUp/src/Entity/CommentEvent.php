@@ -19,7 +19,7 @@ class CommentEvent
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Event", inversedBy="commentEvents")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Event")
      * @ORM\JoinColumn(nullable=false)
      */
     private $event;
@@ -40,11 +40,6 @@ class CommentEvent
      */
     private $created_at;
 
-    public function __construct()
-    {
-        $this->user = new ArrayCollection();
-    }
-
     public function getId(): ?int
     {
         return $this->id;
@@ -63,27 +58,16 @@ class CommentEvent
     }
 
     /**
-     * @return Collection|User[]
+     * @return User
      */
-    public function getUser(): Collection
+    public function getUser(): User
     {
         return $this->user;
     }
 
-    public function addUser(User $user): self
+    public function setUser(User $user): self
     {
-        if (!$this->user->contains($user)) {
-            $this->user = $user;
-        }
-
-        return $this;
-    }
-
-    public function removeUser(User $user): self
-    {
-        if ($this->user->contains($user)) {
-            $this->user->removeElement($user);
-        }
+        $this->user = $user;
 
         return $this;
     }

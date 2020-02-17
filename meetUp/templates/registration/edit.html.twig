@@ -3,46 +3,48 @@
 {% block title %}Modifier Profil{% endblock %}
 
 {% block body %}
-
+    {% include 'include/flashes.html.twig' %}
     <div class="jumbotron">
-        <div class="container mt-3">
-            <h2>Modifier mon profi</h2>
-            {{ form_start(registrationForm) }}
-            <div class="row">
-                <div class="col-md-4">
-                    {{ form_row(registrationForm.username) }}
-                </div>
-                <div class="col-md-4">
-                    {{ form_row(registrationForm.imageFile) }}
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-6">
-                    {{ form_row(registrationForm.firstname) }}
-                </div>
-                <div class="col-md-6">
-                    {{ form_row(registrationForm.lastname) }}
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    {{ form_row(registrationForm.email) }}
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    {{ form_row(registrationForm.plainPassword) }}
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-2">
-                    <button class="btn btn-primary">Sauvgarder</button>
-                </div>
-                <div class="col-md-2">
-                    {{ form_row(registrationForm.agreeTerms) }}
-                </div>
-                {{ form_end(registrationForm) }}
-            </div>
+        <div class="container mt-3 mb-3">
+            <h1>Modifier mon profi</h1>
         </div>
     </div>
+    <div class="container mt-3 mb-3">
+        {{ form_start(registrationForm) }}
+        <div class="row">
+            <div class="col-md-6">
+                {{ form_row(registrationForm.username) }}
+            </div>
+            <div class="col-md-6">
+                {{ form_row(registrationForm.imageFile) }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                {{ form_row(registrationForm.firstname) }}
+            </div>
+            <div class="col-md-6">
+                {{ form_row(registrationForm.lastname) }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                {{ form_row(registrationForm.email) }}
+                {{ form_row(registrationForm.plainPassword) }}
+            </div>
+            <div class="col-md-6">
+                {{ form_row(registrationForm.roles) }}
+            </div>
+        </div>
+        <div class="row  mt-3">
+            <div class="col-md-2">
+                <button class="btn btn-info">Sauvgarder</button>
+            </div>
+            <div class="col-md-2 mt-1">
+                {{ form_row(registrationForm.agreeTerms) }}
+            </div>
+            {{ form_end(registrationForm) }}
+        </div>
+    </div>
+
 {% endblock %}

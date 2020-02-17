@@ -5,9 +5,9 @@ use App\Entity\CommentEvent;
 use App\Entity\Event;
 use App\Entity\User;
 use App\Form\CommentEventType;
+use App\Repository\CommentEventRepository;
 use App\Repository\EventRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\Persistence\ObjectManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -25,10 +25,16 @@ class EventsController extends AbstractController
      */
     private $em;
 
-    public function __construct(EventRepository $repository, EntityManagerInterface $em)
+    /**
+     * @var CommentEventRepository
+     */
+    private $commentEventRepository;
+
+    public function __construct(EventRepository $repository, CommentEventRepository $commentEventRepository,  EntityManagerInterface $em)
     {
         $this->repository = $repository;
         $this->em = $em;
+        $this->commentEventRepository = $commentEventRepository;
     }
 
     /**
@@ -58,18 +64,19 @@ class EventsController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()){
+            if ($this->getUser() !== null) {
+                $comment->setCreatedAt(new \DateTime());
+                $comment->setEvent($event);
+                $comment->setUser($this->getUser());
 
-            $user = $this->getDoctrine()
-                ->getRepository(User::class)
-                ->find($this->getUser());
-
-            $comment->setCreatedAt(new \DateTime());
-            $comment->setEvent($event);
-            $comment->addUser($user);
-
-            $this->getDoctrine()->getManager()->persist($comment);
-            $this->getDoctrine()->getManager()->flush();
+                $this->getDoctrine()->getManager()->persist($comment);
+                $this->getDoctrine()->getManager()->flush();
+            } else {
+                return $this->redirectToRoute('login');
+            }
         }
+
+        $comments = $this->commentEventRepository->findBy(['event' => $event->getId()]);
 
         if ($event->getSlug() !== $slug) {
             return $this->redirectToRoute('events.show', [
@@ -77,9 +84,11 @@ class EventsController extends AbstractController
                 'slug' => $event->getSlug()
             ], 301);
         }
+
         return $this->render('events/show.html.twig', [
             'commentEventForm' => $form->createView(),
             'event' => $event,
+            'comments' => $comments,
             'current_menu' => 'event'
         ]);
     }
@@ -91,28 +100,27 @@ class EventsController extends AbstractController
      */
     public function join(Event $event, string $slug): Response
     {
+        $comment = new CommentEvent();
+        $form = $this->createForm(CommentEventType::class, $comment);
+
         $event = $this->getDoctrine()
             ->getRepository(Event::class)
             ->find($event);
 
-        $user = $this->getDoctrine()
-            ->getRepository(User::class)
-            ->find($this->getUser());
+        $comments = $this->commentEventRepository->findBy(['event' => $event->getId()]);
 
         if ($event->getSlug() === $slug) {
+            $user = $this->getUser();
             $event->addUser($user);
             $user->addEvent($event);
 
             $this->getDoctrine()->getManager()->flush();
-
-
-        } else {
-            return $this->redirectToRoute('events.show', [
-                'id' => $event->getId(),
-            ], 301);
         }
+
         return $this->render('events/show.html.twig', [
+            'commentEventForm' => $form->createView(),
             'event' => $event,
+            'comments' => $comments,
             'current_menu' => 'event'
         ]);
     }
